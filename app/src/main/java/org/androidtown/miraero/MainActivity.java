@@ -16,15 +16,21 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.widget.ImageView;
 import android.widget.Toast;
 
-public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener {
 
     private View layout;
     DrawerLayout drawerLayout;
     NavigationView navigationView;
     ActionBarDrawerToggle actionBarDrawerToggle;
     Toolbar toolbar;
+
+    ImageView before_event, next_event;
+    ImageView event;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +46,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         navigationView.setNavigationItemSelectedListener(this);
         actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawerLayout.addDrawerListener(actionBarDrawerToggle);
+
+        before_event = findViewById(R.id.event_before_narrow);
+        next_event = findViewById(R.id.event_next_narrow);
+        before_event.setOnClickListener(this);
+        next_event.setOnClickListener(this);
+        event = findViewById(R.id.event_image);
     }
 
     @Override
@@ -97,5 +109,18 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
         drawerLayout.closeDrawer(GravityCompat.START);
         return false;
+    }
+
+    //기획전 화살표 클릭시 기획전 사진 움직이기
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.event_before_narrow:
+                Animation animation = AnimationUtils.loadAnimation(this, R.anim.translate_toleft_eventimage);
+                event.startAnimation(animation);
+                break;
+            case R.id.event_next_narrow:
+                break;
+        }
     }
 }
