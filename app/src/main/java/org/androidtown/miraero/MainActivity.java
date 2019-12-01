@@ -20,8 +20,9 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.Toast;
+import android.widget.ViewFlipper;
 
-public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener {
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private View layout;
     DrawerLayout drawerLayout;
@@ -30,7 +31,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     Toolbar toolbar;
 
     ImageView before_event, next_event;
-    ImageView event;
+    ViewFlipper eventviewFlipper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,11 +48,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawerLayout.addDrawerListener(actionBarDrawerToggle);
 
-        before_event = findViewById(R.id.event_before_narrow);
-        next_event = findViewById(R.id.event_next_narrow);
-        before_event.setOnClickListener(this);
-        next_event.setOnClickListener(this);
-        event = findViewById(R.id.event_image);
+        eventviewFlipper = findViewById(R.id.event_image_slide);
+
+        int images[] = {
+                R.drawable.event1,
+                R.drawable.event2
+        };
+
+        for(int image : images) {
+            fllipperImages(image);
+        }
     }
 
     @Override
@@ -111,16 +117,17 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         return false;
     }
 
-    //기획전 화살표 클릭시 기획전 사진 움직이기
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.event_before_narrow:
-                Animation animation = AnimationUtils.loadAnimation(this, R.anim.translate_toleft_eventimage);
-                event.startAnimation(animation);
-                break;
-            case R.id.event_next_narrow:
-                break;
-        }
+    public void fllipperImages(int image) {
+        ImageView imageView = new ImageView(this);
+        imageView.setBackgroundResource(image);
+
+        imageView.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
+        eventviewFlipper.addView(imageView);
+        eventviewFlipper.setFlipInterval(4000);
+        eventviewFlipper.setAutoStart(true);
+
+        eventviewFlipper.setInAnimation(this, android.R.anim.slide_in_left);
+        eventviewFlipper.setOutAnimation(this, android.R.anim.slide_out_right);
     }
+
 }
