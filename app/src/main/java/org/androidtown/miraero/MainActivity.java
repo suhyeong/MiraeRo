@@ -2,6 +2,8 @@ package org.androidtown.miraero;
 
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.NavigationView;
@@ -22,6 +24,15 @@ import android.widget.ImageView;
 import android.widget.Toast;
 import android.widget.ViewFlipper;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.storage.FileDownloadTask;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+
+import java.io.File;
+import java.io.IOException;
+
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private View layout;
@@ -32,6 +43,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     ImageView before_event, next_event;
     ViewFlipper eventviewFlipper;
+
+    FirebaseStorage firebaseStorage = FirebaseStorage.getInstance("gs://miraero-771a2.appspot.com/");
+    StorageReference mStroageRef = firebaseStorage.getReference();
+    StorageReference pathRaference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,14 +65,69 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         eventviewFlipper = findViewById(R.id.event_image_slide);
 
-        int images[] = {
-                R.drawable.event1,
-                R.drawable.event2
-        };
+        pathRaference = mStroageRef.child("Event/event1");
+        pathRaference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+            @Override
+            public void onSuccess(Uri uri) {
+                Toast.makeText(getApplicationContext(), pathRaference.getPath().toString(), Toast.LENGTH_SHORT).show();
+                fllipperImages(uri);
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Toast.makeText(getApplicationContext(), "실패", Toast.LENGTH_SHORT).show();
+                e.printStackTrace();
+            }
+        });
 
-        for(int image : images) {
-            fllipperImages(image);
-        }
+//        for(int i=0;i<2;i++) {
+//            //String string = mStroageRef.child("/Event/event"+(i+1)+".png").getParent().toString();
+//            pathRaference = mStroageRef.child("/Event/event"+(i+1)+".png");
+//            Toast.makeText(getApplicationContext(), pathRaference.getPath(), Toast.LENGTH_SHORT).show();
+//            pathRaference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+//                @Override
+//                public void onSuccess(Uri uri) {
+//                    Toast.makeText(getApplicationContext(), pathRaference.getPath().toString(), Toast.LENGTH_SHORT).show();
+//                    fllipperImages(uri);
+//                }
+//            }).addOnFailureListener(new OnFailureListener() {
+//                @Override
+//                public void onFailure(@NonNull Exception e) {
+//                    e.printStackTrace();
+//                }
+//            });
+//        }
+
+//        mStroageRef = FirebaseStorage.getInstance("gs://miraero-771a2.appspot.com/").getReference();
+//        mStroageRef.child("/Event").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+//            @Override
+//            public void onSuccess(Uri uri) {
+//                uri.get
+//            }
+//        })
+//        mStroageRef.child("/Event").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+//            @Override
+//            public void onSuccess(Uri uri) {
+//                for(int i=0;i<event_image.length;i++) {
+//                    event_image[i].setImageURI(uri);
+//                }
+//                event_image[0].setImageURI(uri);
+//            }
+//        }).addOnFailureListener(new OnFailureListener() {
+//            @Override
+//            public void onFailure(@NonNull Exception e) {
+//                e.printStackTrace();
+//            }
+//        });
+//
+//        int images[] = {
+//                R.drawable.event1,
+//                R.drawable.event2
+//        };
+//
+//        for(int image : images) {
+//            fllipperImages(image);
+//        }
     }
 
     @Override
@@ -117,9 +187,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         return false;
     }
 
-    public void fllipperImages(int image) {
+    public void fllipperImages(Uri uri) {
         ImageView imageView = new ImageView(this);
-        imageView.setBackgroundResource(image);
+        imageView.setImageURI(uri);
+        //imageView.setBackgroundResource(image);
+        //imageView.setBackground(background);
 
         imageView.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
         eventviewFlipper.addView(imageView);
