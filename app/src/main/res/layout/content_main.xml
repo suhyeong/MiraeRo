@@ -14,7 +14,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="금주의 기획전"
-        android:textSize="25sp"
+        android:textSize="20sp"
         android:layout_marginTop="20sp"
         app:layout_constraintBottom_toTopOf="@+id/event_image_slide"
         app:layout_constraintLeft_toLeftOf="parent"
