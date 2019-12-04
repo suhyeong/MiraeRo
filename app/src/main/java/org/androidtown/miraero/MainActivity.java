@@ -17,13 +17,20 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.ListAdapter;
+import android.widget.ListView;
 import android.widget.Toast;
 import android.widget.ViewFlipper;
 
@@ -37,6 +44,7 @@ import com.google.firebase.storage.StorageReference;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
@@ -50,6 +58,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     ViewFlipper eventviewFlipper;
     FirebaseStorage firebaseStorage = FirebaseStorage.getInstance();
     StorageReference mStroageRef = firebaseStorage.getReference();
+
+    RecyclerView recyclerView;
+    RecyclerAdapter recyclerAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,6 +100,32 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         eventviewFlipper.setAutoStart(true);
         eventviewFlipper.setInAnimation(this, R.anim.translate_toleft_eventimage);
         eventviewFlipper.setOutAnimation(this, R.anim.translate_toright_eventimage);
+
+        //final String[] list = {"list1","list2","list3","list4","list5","list6","list7","list8"};
+        recyclerView = findViewById(R.id.best_item_list);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+        recyclerView.setLayoutManager(linearLayoutManager);
+        recyclerAdapter = new RecyclerAdapter();
+        recyclerView.setAdapter(recyclerAdapter);
+        getData();
+    }
+
+    private void getData() {
+        List<String> name = Arrays.asList("첫번째 아이템", "두번째 아이템", "세번째 아이템");
+        List<String> content = Arrays.asList("첫번째 아이템 설명입니다","두번째 아이템 설명입니다아아아아아 일이삼사오 육칠팔구십 십일십이 십삼 되라 ~","세번째 아이템 설명입니다");
+        List<Integer> id = Arrays.asList(R.drawable.p1, R.drawable.p2, R.drawable.p3);
+
+        for(int i=0;i<name.size();i++) {
+            Item item = new Item();
+            item.setName(name.get(i));
+            item.setContent(content.get(i));
+            item.setId(id.get(i));
+
+            //각 값에 들어간 데이터를 Adapter에 추가
+            recyclerAdapter.addItem(item);
+        }
+        //Adapter의 값이 변경됐음을 알림
+        recyclerAdapter.notifyDataSetChanged();
     }
 
     @Override
