@@ -1,5 +1,7 @@
 package org.androidtown.miraero;
 
+import android.graphics.Bitmap;
+import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -7,10 +9,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import java.util.ArrayList;
+import java.util.Comparator;
 
-public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ItemViewHolder> {
+public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ItemViewHolder> implements Comparator<Item> {
 
     //adapter에 들어갈 list
     private ArrayList<Item> Itemlist = new ArrayList<>();
@@ -23,8 +25,11 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ItemVi
     }
 
     @Override
-    public void onBindViewHolder(@NonNull RecyclerAdapter.ItemViewHolder itemViewHolder, int i) {
+    public void onBindViewHolder(@NonNull ItemViewHolder itemViewHolder, int i) {
         //item을 보여주는 함수
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            Itemlist.sort(this);
+        }
         itemViewHolder.onBind(Itemlist.get(i));
     }
 
@@ -36,6 +41,15 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ItemVi
     void addItem(Item item) {
         //리스트에 item추가
         Itemlist.add(item);
+    }
+
+    //리스트 정렬 기준 설정
+    @Override
+    public int compare(Item o1, Item o2) {
+        if(o1.getSellcount() >= o2.getSellcount())
+            return -1;
+        else
+            return 0;
     }
 
     //subView setting
@@ -55,11 +69,12 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ItemVi
         void onBind(Item item) {
             ItemName.setText(item.getName());
             ItemContent.setText(item.getContent());
-            //ItemImage.setImageBitmap(item.getBitmap());
-            ItemImage.setScaleType(ImageView.ScaleType.FIT_CENTER);
-            ItemImage.setBackgroundResource(item.getId());
+            ItemImage.setScaleType(ImageView.ScaleType.CENTER_CROP);
+            ItemImage.setImageBitmap(item.getBitmap());
+            //ItemImage.setScaleType(ImageView.ScaleType.FIT_CENTER);
+            //ItemImage.setBackgroundResource(item.getId());
         }
-    }
 
+    }
 
 }

@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="10sp"
+    android:padding="7sp"
     tools:ignore="MissingConstraints">
 
     <TextView
@@ -26,7 +26,7 @@
 
     <TextView
         android:id="@+id/item_content"
-        android:layout_width="wrap_content"
+        android:layout_width="285sp"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
         android:layout_marginTop="5sp"
@@ -36,7 +36,6 @@
         android:scrollHorizontally="false"
         android:singleLine="false"
         android:text="여기는 아이템 설명이 들어가는 텍스트뷰이다"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/item_image"
         app:layout_constraintTop_toBottomOf="@+id/item_name" />
