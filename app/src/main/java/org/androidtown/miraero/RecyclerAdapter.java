@@ -58,12 +58,14 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ItemVi
         private TextView ItemName;
         private TextView ItemContent;
         private ImageView ItemImage;
+        private ImageView ItemNorS;
 
         public ItemViewHolder(@NonNull View itemView) {
             super(itemView);
             ItemName = itemView.findViewById(R.id.item_name);
             ItemContent = itemView.findViewById(R.id.item_content);
             ItemImage = itemView.findViewById(R.id.item_image);
+            ItemNorS = itemView.findViewById(R.id.item_n_or_s);
         }
 
         void onBind(Item item) {
@@ -71,10 +73,17 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ItemVi
             ItemContent.setText(item.getContent());
             ItemImage.setScaleType(ImageView.ScaleType.CENTER_CROP);
             ItemImage.setImageBitmap(item.getBitmap());
-            //ItemImage.setScaleType(ImageView.ScaleType.FIT_CENTER);
-            //ItemImage.setBackgroundResource(item.getId());
+            SettingNorSImage(item.getNorth_or_South());
+        }
+
+        public void SettingNorSImage(String c) {
+            if(c.equals("N"))
+                ItemNorS.setImageResource(R.drawable.ic_north_24dp);
+            else if(c.equals("S"))
+                ItemNorS.setImageResource(R.drawable.ic_south_24dp);
+            else if(c.equals("B"))
+                ItemNorS.setImageResource(R.drawable.ic_northandsouth_24dp);
         }
 
     }
-
 }

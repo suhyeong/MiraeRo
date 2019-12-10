@@ -6,9 +6,10 @@ public class Item {
     private String name;
     private String content;
     private int id;
-    private int sellcount;
+    private long sellcount;
     private Bitmap bitmap;
     private int event_id;
+    private String north_or_south;
 
     public String getName() {
         return name;
@@ -34,11 +35,11 @@ public class Item {
         this.id = id;
     }
 
-    public int getSellcount() {
+    public long getSellcount() {
         return sellcount;
     }
 
-    public void setSellcount(int sellcount) {
+    public void setSellcount(long sellcount) {
         this.sellcount = sellcount;
     }
 
@@ -56,5 +57,13 @@ public class Item {
 
     public void setEvent_id(int event_id) {
         this.event_id = event_id;
+    }
+
+    public String getNorth_or_South() {
+        return north_or_south;
+    }
+
+    public void setNorth_or_South(String north_or_south) {
+        this.north_or_south = north_or_south;
     }
 }

@@ -8,13 +8,27 @@
     android:padding="7sp"
     tools:ignore="MissingConstraints">
 
+    <ImageView
+        android:id="@+id/item_n_or_s"
+        android:layout_width="15sp"
+        android:layout_height="15sp"
+        android:src="@drawable/ic_south_24dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginBottom="5dp"
+        android:layout_marginTop="3sp"
+        android:layout_marginStart="10sp"
+        app:layout_constraintBottom_toTopOf="@+id/item_content"
+        app:layout_constraintEnd_toStartOf="@+id/item_name"
+        app:layout_constraintStart_toEndOf="@+id/item_image"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <TextView
         android:id="@+id/item_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center_vertical"
         android:layout_marginTop="10sp"
-        android:layout_marginStart="10dp"
+        android:layout_marginStart="30dp"
         android:text="아이템 이름"
         android:textSize="20sp"
         android:fontFamily="@font/nixgonfont"

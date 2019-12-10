@@ -114,6 +114,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     item.setContent(getData.getContent());
                     item.setEvent_id(getData.getEvent_id());
                     item.setSellcount(getData.getSellcount());
+                    item.setNorth_or_South(getData.getNorth_or_South());
 
                     mStroageRef.child("/Item/"+item.getId()+".jpg").getBytes(one_byte).addOnSuccessListener(new OnSuccessListener<byte[]>() {
                         @Override
@@ -126,10 +127,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     }).addOnFailureListener(new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull Exception e) {
-                            Toast.makeText(MainActivity.this, "비트맵 받아오기 실패", Toast.LENGTH_SHORT).show();
                             e.printStackTrace();
                         }
                     });
+
                 }
             }
 

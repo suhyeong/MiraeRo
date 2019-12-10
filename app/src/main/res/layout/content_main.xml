@@ -52,6 +52,67 @@
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/event_image_slide" />
 
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="30sp"
+            app:layout_constraintEnd_toEndOf="@id/best_textview"
+            app:layout_constraintTop_toBottomOf="@id/event_image_slide">
+
+            <ImageView
+                android:id="@+id/south_img"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_south_24dp"/>
+
+            <TextView
+                android:id="@+id/south_txt"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:fontFamily="@font/nixgonfont"
+                android:gravity="center"
+                android:paddingStart="5sp"
+                android:paddingEnd="15sp"
+                android:textStyle="bold"
+                android:textSize="17sp"
+                android:text="남한" />
+
+            <ImageView
+                android:id="@+id/north_img"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_north_24dp"/>
+            <TextView
+                android:id="@+id/north_txt"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:fontFamily="@font/nixgonfont"
+                android:gravity="center"
+                android:paddingStart="5sp"
+                android:paddingEnd="15sp"
+                android:textStyle="bold"
+                android:textSize="17sp"
+                android:text="북한"/>
+
+            <ImageView
+                android:id="@+id/north_and_south_img"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_northandsouth_24dp"/>
+            <TextView
+                android:id="@+id/north_and_south_txt"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:fontFamily="@font/nixgonfont"
+                android:gravity="center"
+                android:paddingStart="5sp"
+                android:paddingEnd="15sp"
+                android:textStyle="bold"
+                android:textSize="17sp"
+                android:text="공통"/>
+        </LinearLayout>
+
         <View
             android:id="@+id/division_line"
             android:layout_width="match_parent"
