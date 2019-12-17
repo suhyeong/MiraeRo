@@ -5,7 +5,7 @@ import android.graphics.Bitmap;
 public class Item {
     private String name;
     private String content;
-    private int id;
+    private long id;
     private long sellcount;
     private Bitmap bitmap;
     private int event_id;
@@ -27,7 +27,7 @@ public class Item {
         this.content = content;
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 

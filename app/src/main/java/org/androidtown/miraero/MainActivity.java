@@ -1,5 +1,6 @@
 package org.androidtown.miraero;
 
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -33,7 +34,7 @@ import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, RecyclerAdapter.OnItemClickListener {
 
     private View layout;
     DrawerLayout drawerLayout;
@@ -76,8 +77,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         recyclerAdapter = new RecyclerAdapter();
         recyclerView.setAdapter(recyclerAdapter);
         getData();
+        recyclerAdapter.setOnItemClickListener(this);
+
     }
 
+    //기획전 이미지 불러오기
     private void EventFliperImage() {
         for(int i=0;i<3;i++) {
             final int finalI = i;
@@ -101,6 +105,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         eventviewFlipper.setOutAnimation(this, R.anim.translate_toright_eventimage);
     }
 
+    public void fllipperImages(Bitmap bitmap) {
+        ImageView imageView = new ImageView(this);
+        imageView.setImageBitmap(bitmap);
+        eventviewFlipper.addView(imageView);
+    }
+
+    //파이어베이스에서 정보 가져와 Itemlist에 넣기
     public void getData() {
         mDatabaseRef.child("Item").addValueEventListener(new ValueEventListener() {
             @Override
@@ -141,12 +152,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         });
     }
 
+    //툴바 활성화
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.toolbar_menu, menu);
         return true;
     }
 
+    //툴바 메뉴 클릭시 이벤트
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
@@ -198,10 +211,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         return false;
     }
 
-    public void fllipperImages(Bitmap bitmap) {
-        ImageView imageView = new ImageView(this);
-        imageView.setImageBitmap(bitmap);
-        eventviewFlipper.addView(imageView);
+    //RecyclerView 리스트마다 클릭시 수행 이벤트
+    @Override
+    public void OnItemClick(View v, int pos) {
+        long position = recyclerAdapter.getItemID(pos);
+        Intent item_intent = new Intent(v.getContext(), ItemClickActivity.class);
+        item_intent.putExtra("item_id", position);
+        startActivity(item_intent);
     }
-
 }
