@@ -8,6 +8,7 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -33,7 +34,7 @@ public class ItemClickActivity extends AppCompatActivity {
 
     private ImageView item_image;
     private TextView item_name, item_content;
-    private Toolbar toolbar;
+    Toolbar item_toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,9 +44,9 @@ public class ItemClickActivity extends AppCompatActivity {
         Intent intent = getIntent();
         long item_id = intent.getExtras().getLong("item_id");
 
-        toolbar = findViewById(R.id.item_toolbar);
-        setSupportActionBar(toolbar);
-        toolbar.setBackgroundColor(Color.TRANSPARENT);
+        item_toolbar = findViewById(R.id.item_toolbar);
+        setSupportActionBar(item_toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         item_image = findViewById(R.id.item_click_image);
         item_name = findViewById(R.id.item_click_name);
@@ -82,5 +83,15 @@ public class ItemClickActivity extends AppCompatActivity {
                 databaseError.getMessage();
             }
         });
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.home:
+                finish();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }
