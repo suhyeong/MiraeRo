@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.support.annotation.NonNull;
+import android.support.design.widget.TabLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -23,7 +24,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
-public class ItemClickActivity extends AppCompatActivity {
+public class ItemClickActivity extends AppCompatActivity implements TabLayout.BaseOnTabSelectedListener {
 
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference mDatabaseRef = database.getReference();
@@ -33,8 +34,9 @@ public class ItemClickActivity extends AppCompatActivity {
     StorageReference mStroageRef = firebaseStorage.getReference();
 
     private ImageView item_image;
-    private TextView item_name, item_content;
+    private TextView item_name, item_content, item_price;
     Toolbar item_toolbar;
+    TabLayout tabLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,7 +53,11 @@ public class ItemClickActivity extends AppCompatActivity {
         item_image = findViewById(R.id.item_click_image);
         item_name = findViewById(R.id.item_click_name);
         item_content = findViewById(R.id.item_click_content);
+        item_price = findViewById(R.id.item_price);
         getItemData(item_id);
+
+        tabLayout = findViewById(R.id.item_tab_layout);
+        tabLayout.addOnTabSelectedListener(this);
     }
 
     public void getItemData(final long item_id) {
@@ -62,6 +68,7 @@ public class ItemClickActivity extends AppCompatActivity {
 
                 item_name.setText(item.getName());
                 item_content.setText(item.getContent());
+                item_price.setText(String.valueOf(item.getPrice()));
                 item_image.setScaleType(ImageView.ScaleType.CENTER_CROP);
                 mStroageRef.child("/Item/"+item_id+".jpg").getBytes(one_byte).addOnSuccessListener(new OnSuccessListener<byte[]>() {
                     @Override
@@ -88,10 +95,26 @@ public class ItemClickActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.home:
+            case android.R.id.home:
                 finish();
                 return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    //탭 레이아웃 선택시
+    @Override
+    public void onTabSelected(TabLayout.Tab tab) {
+
+    }
+
+    @Override
+    public void onTabUnselected(TabLayout.Tab tab) {
+
+    }
+
+    @Override
+    public void onTabReselected(TabLayout.Tab tab) {
+
     }
 }

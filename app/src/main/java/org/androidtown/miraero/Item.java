@@ -6,6 +6,7 @@ public class Item {
     private String name;
     private String content;
     private long id;
+    private long price;
     private long sellcount;
     private Bitmap bitmap;
     private int event_id;
@@ -33,6 +34,14 @@ public class Item {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public long getPrice() {
+        return price;
+    }
+
+    public void setPrice(long price) {
+        this.price = price;
     }
 
     public long getSellcount() {

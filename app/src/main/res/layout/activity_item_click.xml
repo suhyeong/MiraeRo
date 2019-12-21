@@ -11,10 +11,11 @@
     tools:context=".ItemClickActivity"
     tools:ignore="MissingConstraints">
 
+    <include layout="@layout/content_item_click" />
+
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:theme="@style/AppTheme.AppBarOverlay"
         android:background="@android:color/transparent">
 
         <android.support.design.widget.CollapsingToolbarLayout
@@ -28,11 +29,8 @@
                 android:id="@+id/item_toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
-                app:layout_collapseMode="pin"
-                android:theme="@style/AppTheme.PopupOverlay"/>
+                app:layout_collapseMode="pin"/>
         </android.support.design.widget.CollapsingToolbarLayout>
     </android.support.design.widget.AppBarLayout>
-
-    <include layout="@layout/content_item_click" />
 
 </android.support.constraint.ConstraintLayout>
