@@ -3,9 +3,9 @@ package org.androidtown.miraero;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.design.widget.TabLayout;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -35,8 +35,9 @@ public class ItemClickActivity extends AppCompatActivity implements TabLayout.Ba
 
     private ImageView item_image;
     private TextView item_name, item_content, item_price;
-    Toolbar item_toolbar;
-    TabLayout tabLayout;
+    private Toolbar item_toolbar;
+    private TabLayout tabLayout;
+    ViewPager viewPager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +58,14 @@ public class ItemClickActivity extends AppCompatActivity implements TabLayout.Ba
         getItemData(item_id);
 
         tabLayout = findViewById(R.id.item_tab_layout);
+        //tabLayout.addOnTabSelectedListener(this);
+
+        viewPager = findViewById(R.id.item_tab_viewpager);
+
+        TabPagerAdapter tabPagerAdapter = new TabPagerAdapter(getSupportFragmentManager(), tabLayout.getTabCount());
+        //viewPager.setAdapter(tabPagerAdapter);
+        viewPager.setCurrentItem(0);
+        viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
         tabLayout.addOnTabSelectedListener(this);
     }
 
@@ -105,7 +114,7 @@ public class ItemClickActivity extends AppCompatActivity implements TabLayout.Ba
     //탭 레이아웃 선택시
     @Override
     public void onTabSelected(TabLayout.Tab tab) {
-
+        viewPager.setCurrentItem(tab.getPosition());
     }
 
     @Override

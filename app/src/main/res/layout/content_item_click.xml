@@ -58,7 +58,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="20sp"
-            android:layout_marginTop="40sp"
+            android:layout_marginTop="110sp"
             android:fontFamily="@font/nixgonfont"
             android:text="아이템 가격"
             android:textSize="20sp"
@@ -66,12 +66,12 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toEndOf="@id/item_click_image"
-            app:layout_constraintTop_toBottomOf="@id/item_click_content" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="44sp"
+            android:layout_marginTop="115sp"
             android:fontFamily="@font/nixgonfont"
             android:text=" \\ / 1팩"
             android:textSize="16sp"
@@ -80,17 +80,19 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toEndOf="@id/item_price"
-            app:layout_constraintTop_toBottomOf="@id/item_click_content" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <Button
             android:id="@+id/buy_button"
             android:layout_width="180sp"
             android:layout_height="wrap_content"
             android:layout_marginStart="15sp"
-            android:layout_marginTop="15sp"
+            android:layout_marginTop="20sp"
             android:fontFamily="@font/nixgonfont"
             android:text="바로 구매하기"
             android:textStyle="bold"
+            android:textColor="#FFFFFF"
+            android:background="@color/colorPrimary"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/item_click_image" />
 
@@ -98,10 +100,12 @@
             android:id="@+id/cart_button"
             android:layout_width="180sp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="15sp"
+            android:layout_marginTop="20sp"
             android:fontFamily="@font/nixgonfont"
             android:text="장바구니에 담기"
             android:textStyle="bold"
+            android:textColor="#FFFFFF"
+            android:background="@color/colorPrimary"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/buy_button"
             app:layout_constraintTop_toBottomOf="@id/item_click_image" />
@@ -111,6 +115,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20sp"
+            app:tabIndicatorColor="@color/colorPrimary"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/cart_button">
@@ -122,37 +127,26 @@
                 android:text="상세정보" />
 
             <android.support.design.widget.TabItem
-                android:id="@+id/item_tab_country_of_origin"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="원산지 정보" />
-
-            <android.support.design.widget.TabItem
                 android:id="@+id/item_tab_review"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="리뷰" />
 
             <android.support.design.widget.TabItem
-                android:id="@+id/item_tab_"
+                android:id="@+id/item_tab_country_of_origin"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="리뷰" />
+                android:text="원산지 정보" />
         </android.support.design.widget.TabLayout>
 
-        <FrameLayout
-            android:id="@+id/item_tab_contents"
+        <android.support.v4.view.ViewPager
+            android:id="@+id/item_tab_viewpager"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/item_tab_layout">
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
-        </FrameLayout>
+            app:layout_constraintTop_toBottomOf="@+id/item_tab_layout" />
 
     </android.support.constraint.ConstraintLayout>
 </android.support.v4.widget.NestedScrollView>
