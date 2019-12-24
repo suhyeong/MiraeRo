@@ -136,7 +136,7 @@
                 android:id="@+id/item_tab_qna"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Q&amp;A" />
+                android:text="Q&amp;A"/>
 
             <android.support.design.widget.TabItem
                 android:id="@+id/item_tab_country_of_origin"

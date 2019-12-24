@@ -17,6 +17,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -33,25 +34,28 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 
-public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, RecyclerAdapter.OnItemClickListener {
+public class MainActivity extends AppCompatActivity
+        implements NavigationView.OnNavigationItemSelectedListener, RecyclerAdapter.OnItemClickListener, View.OnClickListener {
 
     private View layout;
-    DrawerLayout drawerLayout;
-    NavigationView navigationView;
-    ActionBarDrawerToggle actionBarDrawerToggle;
-    Toolbar toolbar;
+    private DrawerLayout drawerLayout;
+    private NavigationView navigationView;
+    private ActionBarDrawerToggle actionBarDrawerToggle;
+    private Toolbar toolbar;
 
-    final long one_byte = 1024 * 1024;
-    ViewFlipper eventviewFlipper;
+    private ViewFlipper eventviewFlipper;
     FirebaseStorage firebaseStorage = FirebaseStorage.getInstance();
     StorageReference mStroageRef = firebaseStorage.getReference();
 
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference mDatabaseRef = database.getReference();
 
-    RecyclerView recyclerView;
-    RecyclerAdapter recyclerAdapter;
+    final long one_byte = 1024 * 1024;
+    private RecyclerView recyclerView;
+    private RecyclerAdapter recyclerAdapter;
+    private ArrayList<Integer> event_order = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,6 +74,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         eventviewFlipper = findViewById(R.id.event_image_slide);
         EventFliperImage();
+        eventviewFlipper.setOnClickListener(this);
 
         recyclerView = findViewById(R.id.best_item_list);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
@@ -78,18 +83,19 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         recyclerView.setAdapter(recyclerAdapter);
         getData();
         recyclerAdapter.setOnItemClickListener(this);
-
     }
 
     //기획전 이미지 불러오기
     private void EventFliperImage() {
+        //mStroageRef.child("Event").
         for(int i=0;i<3;i++) {
             final int finalI = i;
             mStroageRef.child("/Event/event"+(finalI+1)+".png").getBytes(one_byte).addOnSuccessListener(new OnSuccessListener<byte[]>() {
                 @Override
                 public void onSuccess(byte[] bytes) {
                     Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
-                    fllipperImages(bitmap);
+                    flipperImages(bitmap);
+                    event_order.add(finalI+1);
                 }
             }).addOnFailureListener(new OnFailureListener() {
                 @Override
@@ -105,7 +111,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         eventviewFlipper.setOutAnimation(this, R.anim.translate_toright_eventimage);
     }
 
-    public void fllipperImages(Bitmap bitmap) {
+    public void flipperImages(Bitmap bitmap) {
         ImageView imageView = new ImageView(this);
         imageView.setImageBitmap(bitmap);
         eventviewFlipper.addView(imageView);
@@ -218,5 +224,24 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         Intent item_intent = new Intent(v.getContext(), ItemClickActivity.class);
         item_intent.putExtra("item_id", position);
         startActivity(item_intent);
+    }
+
+    @Override
+    public void onClick(View v) {
+        Intent event_intent = new Intent(v.getContext(), EventClickActivity.class);
+        switch (eventviewFlipper.getDisplayedChild()) {
+            case 0:
+                event_intent.putExtra("event_id", event_order.get(0));
+                startActivity(event_intent);
+                break;
+            case 1:
+                event_intent.putExtra("event_id", event_order.get(1));
+                startActivity(event_intent);
+                break;
+            case 2:
+                event_intent.putExtra("event_id", event_order.get(2));
+                startActivity(event_intent);
+                break;
+        }
     }
 }

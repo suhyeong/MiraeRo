@@ -110,6 +110,7 @@ public class ItemClickActivity extends AppCompatActivity implements TabLayout.On
         return super.onOptionsItemSelected(item);
     }
 
+    //탭 레이아웃 선택시
     @Override
     public void onTabSelected(TabLayout.Tab tab) {
         viewPager.setCurrentItem(tab.getPosition());
@@ -124,21 +125,4 @@ public class ItemClickActivity extends AppCompatActivity implements TabLayout.On
     public void onTabReselected(TabLayout.Tab tab) {
 
     }
-
-    //탭 레이아웃 선택시
-//    @Override
-//    public void onTabSelected(TabLayout.Tab tab) {
-//        viewPager.setCurrentItem(tab.getPosition());
-//        Toast.makeText(this, String.valueOf(tab.getPosition()), Toast.LENGTH_SHORT).show();
-//    }
-//
-//    @Override
-//    public void onTabUnselected(TabLayout.Tab tab) {
-//
-//    }
-//
-//    @Override
-//    public void onTabReselected(TabLayout.Tab tab) {
-//
-//    }
 }

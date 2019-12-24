@@ -51,7 +51,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ItemVi
     //리스트 정렬 기준 설정
     @Override
     public int compare(Item o1, Item o2) {
-        if(o1.getSellcount() >= o2.getSellcount())
+        if(o1.getSellcount() > o2.getSellcount())
             return -1;
         else
             return 0;
