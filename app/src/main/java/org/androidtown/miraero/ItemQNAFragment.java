@@ -8,14 +8,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-public class ItemOriginFragment extends Fragment {
 
-    public ItemOriginFragment() {
+public class ItemQNAFragment extends Fragment {
+
+    public ItemQNAFragment() {
         // Required empty public constructor
     }
 
-    public static ItemOriginFragment newInstance(String param1, String param2) {
-        ItemOriginFragment fragment = new ItemOriginFragment();
+    public static ItemQNAFragment newInstance(String param1, String param2) {
+        ItemQNAFragment fragment = new ItemQNAFragment();
         return fragment;
     }
 
@@ -28,7 +29,7 @@ public class ItemOriginFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_item_origin, container, false);
+        View view = inflater.inflate(R.layout.fragment_item_qna, container, false);
         return view;
     }
 

@@ -10,6 +10,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -24,7 +25,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
-public class ItemClickActivity extends AppCompatActivity implements TabLayout.BaseOnTabSelectedListener {
+public class ItemClickActivity extends AppCompatActivity implements TabLayout.OnTabSelectedListener{
 
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference mDatabaseRef = database.getReference();
@@ -37,7 +38,8 @@ public class ItemClickActivity extends AppCompatActivity implements TabLayout.Ba
     private TextView item_name, item_content, item_price;
     private Toolbar item_toolbar;
     private TabLayout tabLayout;
-    ViewPager viewPager;
+    private ViewPager viewPager;
+    private TabPagerAdapter tabPagerAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,13 +60,10 @@ public class ItemClickActivity extends AppCompatActivity implements TabLayout.Ba
         getItemData(item_id);
 
         tabLayout = findViewById(R.id.item_tab_layout);
-        //tabLayout.addOnTabSelectedListener(this);
-
         viewPager = findViewById(R.id.item_tab_viewpager);
 
-        TabPagerAdapter tabPagerAdapter = new TabPagerAdapter(getSupportFragmentManager(), tabLayout.getTabCount());
-        //viewPager.setAdapter(tabPagerAdapter);
-        viewPager.setCurrentItem(0);
+        tabPagerAdapter = new TabPagerAdapter(getSupportFragmentManager());
+        viewPager.setAdapter(tabPagerAdapter);
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
         tabLayout.addOnTabSelectedListener(this);
     }
@@ -111,7 +110,6 @@ public class ItemClickActivity extends AppCompatActivity implements TabLayout.Ba
         return super.onOptionsItemSelected(item);
     }
 
-    //탭 레이아웃 선택시
     @Override
     public void onTabSelected(TabLayout.Tab tab) {
         viewPager.setCurrentItem(tab.getPosition());
@@ -126,4 +124,21 @@ public class ItemClickActivity extends AppCompatActivity implements TabLayout.Ba
     public void onTabReselected(TabLayout.Tab tab) {
 
     }
+
+    //탭 레이아웃 선택시
+//    @Override
+//    public void onTabSelected(TabLayout.Tab tab) {
+//        viewPager.setCurrentItem(tab.getPosition());
+//        Toast.makeText(this, String.valueOf(tab.getPosition()), Toast.LENGTH_SHORT).show();
+//    }
+//
+//    @Override
+//    public void onTabUnselected(TabLayout.Tab tab) {
+//
+//    }
+//
+//    @Override
+//    public void onTabReselected(TabLayout.Tab tab) {
+//
+//    }
 }

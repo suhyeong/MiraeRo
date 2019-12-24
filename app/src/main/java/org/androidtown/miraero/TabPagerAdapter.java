@@ -2,16 +2,12 @@ package org.androidtown.miraero;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
 public class TabPagerAdapter extends FragmentStatePagerAdapter {
 
-    private int TabCount;
-
-    public TabPagerAdapter(FragmentManager fm, int TabCount) {
+    public TabPagerAdapter(FragmentManager fm) {
         super(fm);
-        this.TabCount = TabCount;
     }
 
     @Override
@@ -24,6 +20,9 @@ public class TabPagerAdapter extends FragmentStatePagerAdapter {
                 ItemReviewFragment itemReviewFragment = new ItemReviewFragment();
                 return itemReviewFragment;
             case 2:
+                ItemQNAFragment itemQNAFragment = new ItemQNAFragment();
+                return itemQNAFragment;
+            case 3:
                 ItemOriginFragment itemOriginFragment = new ItemOriginFragment();
                 return itemOriginFragment;
             default:
@@ -33,6 +32,6 @@ public class TabPagerAdapter extends FragmentStatePagerAdapter {
 
     @Override
     public int getCount() {
-        return TabCount;
+        return 4;
     }
 }
