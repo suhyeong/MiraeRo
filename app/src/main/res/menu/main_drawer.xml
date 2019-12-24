@@ -7,6 +7,31 @@
         <item
             android:id="@+id/nav_home"
             android:icon="@drawable/ic_home_gray_24dp"
-            android:title="home" />
+            android:title="HOME" />
+
     </group>
+    <item android:title="메인 메뉴">
+        <menu>
+            <item
+                android:id="@+id/nav_order"
+                android:icon="@drawable/ic_assignment_gray_24dp"
+                android:title="주문/배송 내역" />
+            <item
+                android:id="@+id/nav_notice"
+                android:icon="@drawable/ic_notifications_gray_24dp"
+                android:title="공지사항" />
+            <item
+                android:id="@+id/nav_customer_service"
+                android:icon="@drawable/ic_headset_mic_gray_24dp"
+                android:title="자주 묻는 질문 / 고객센터" />
+        </menu>
+    </item>
+    <item android:title="\?">
+        <menu>
+            <item
+                android:id="@+id/nav_about_app"
+                android:icon="@drawable/ic_info_outline_gray_24dp"
+                android:title="About 미래로" />
+        </menu>
+    </item>
 </menu>

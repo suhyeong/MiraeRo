@@ -212,6 +212,18 @@ public class MainActivity extends AppCompatActivity
             case R.id.nav_home:
                 Toast.makeText(this, "홈 클릭 !", Toast.LENGTH_SHORT).show();
                 break;
+            case R.id.nav_order:
+                Toast.makeText(this, "주문/배송 내역 클릭 !", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.nav_notice:
+                Toast.makeText(this, "공지사항 클릭 !", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.nav_customer_service:
+                Toast.makeText(this, "고객센터 클릭 !", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.nav_about_app:
+                Toast.makeText(this, "about 미래로 클릭 !", Toast.LENGTH_SHORT).show();
+                break;
         }
         drawerLayout.closeDrawer(GravityCompat.START);
         return false;
@@ -226,6 +238,7 @@ public class MainActivity extends AppCompatActivity
         startActivity(item_intent);
     }
 
+    //기획전 클릭시 수행 이벤트
     @Override
     public void onClick(View v) {
         Intent event_intent = new Intent(v.getContext(), EventClickActivity.class);
