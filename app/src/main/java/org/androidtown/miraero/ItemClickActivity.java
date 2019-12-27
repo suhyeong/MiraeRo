@@ -11,6 +11,9 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -25,7 +28,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
-public class ItemClickActivity extends AppCompatActivity implements TabLayout.OnTabSelectedListener{
+public class ItemClickActivity extends AppCompatActivity implements TabLayout.OnTabSelectedListener, View.OnClickListener {
 
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference mDatabaseRef = database.getReference();
@@ -36,6 +39,9 @@ public class ItemClickActivity extends AppCompatActivity implements TabLayout.On
 
     private ImageView item_image;
     private TextView item_name, item_content, item_price;
+    private EditText item_count;
+    private Button item_buy, item_cart;
+    private ImageButton item_count_up, item_count_down;
     private Toolbar item_toolbar;
     private TabLayout tabLayout;
     private ViewPager viewPager;
@@ -66,6 +72,16 @@ public class ItemClickActivity extends AppCompatActivity implements TabLayout.On
         viewPager.setAdapter(tabPagerAdapter);
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
         tabLayout.addOnTabSelectedListener(this);
+
+        item_buy = findViewById(R.id.buy_button);
+        item_cart = findViewById(R.id.cart_button);
+
+        item_count = findViewById(R.id.item_count);
+        item_count.setText(String.valueOf(1));
+        item_count_up = findViewById(R.id.item_count_up);
+        item_count_down = findViewById(R.id.item_count_down);
+        item_count_up.setOnClickListener(this);
+        item_count_down.setOnClickListener(this);
     }
 
     public void getItemData(final long item_id) {
@@ -124,5 +140,23 @@ public class ItemClickActivity extends AppCompatActivity implements TabLayout.On
     @Override
     public void onTabReselected(TabLayout.Tab tab) {
 
+    }
+
+    //아이템 수량 추가/삭제를 위한 버튼 클릭시 수행 이벤트
+    @Override
+    public void onClick(View v) {
+        int count = Integer.parseInt(item_count.getText().toString());
+        switch (v.getId()) {
+            case R.id.item_count_up:
+                count++;
+                item_count.setText(String.valueOf(count));
+                break;
+            case R.id.item_count_down:
+                if(count > 1) {
+                    count--;
+                }
+                item_count.setText(String.valueOf(count));
+                break;
+        }
     }
 }

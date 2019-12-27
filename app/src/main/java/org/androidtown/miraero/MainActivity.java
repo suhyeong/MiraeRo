@@ -224,6 +224,9 @@ public class MainActivity extends AppCompatActivity
             case R.id.nav_about_app:
                 Toast.makeText(this, "about 미래로 클릭 !", Toast.LENGTH_SHORT).show();
                 break;
+            case R.id.nav_logout:
+                Toast.makeText(this, "로그아웃 클릭 !", Toast.LENGTH_SHORT).show();
+                break;
         }
         drawerLayout.closeDrawer(GravityCompat.START);
         return false;
