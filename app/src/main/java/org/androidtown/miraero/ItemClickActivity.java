@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.support.annotation.NonNull;
+import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -15,6 +16,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -28,6 +30,9 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
+import java.util.Currency;
+import java.util.Locale;
+
 public class ItemClickActivity extends AppCompatActivity implements TabLayout.OnTabSelectedListener, View.OnClickListener {
 
     FirebaseDatabase database = FirebaseDatabase.getInstance();
@@ -40,8 +45,11 @@ public class ItemClickActivity extends AppCompatActivity implements TabLayout.On
     private ImageView item_image;
     private TextView item_name, item_content, item_price;
     private EditText item_count;
-    private Button item_buy, item_cart;
+    private Button item_buy, item_cart, item_add;
     private ImageButton item_count_up, item_count_down;
+    private LinearLayout item_add_layout;
+    private TextView item_add_name, item_add_count, item_add_price;
+    private Button item_add_delete;
     private Toolbar item_toolbar;
     private TabLayout tabLayout;
     private ViewPager viewPager;
@@ -73,15 +81,26 @@ public class ItemClickActivity extends AppCompatActivity implements TabLayout.On
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
         tabLayout.addOnTabSelectedListener(this);
 
-        item_buy = findViewById(R.id.buy_button);
-        item_cart = findViewById(R.id.cart_button);
-
         item_count = findViewById(R.id.item_count);
         item_count.setText(String.valueOf(1));
         item_count_up = findViewById(R.id.item_count_up);
         item_count_down = findViewById(R.id.item_count_down);
         item_count_up.setOnClickListener(this);
         item_count_down.setOnClickListener(this);
+
+        item_buy = findViewById(R.id.buy_button);
+        item_buy.setOnClickListener(this);
+        item_cart = findViewById(R.id.cart_button);
+        item_cart.setOnClickListener(this);
+        item_add = findViewById(R.id.item_add);
+        item_add.setOnClickListener(this);
+        item_add_layout = findViewById(R.id.item_add_layout);
+        item_add_layout.setVisibility(View.GONE);
+        item_add_name = findViewById(R.id.item_add_name);
+        item_add_count = findViewById(R.id.item_add_count);
+        item_add_price = findViewById(R.id.item_add_price);
+        item_add_delete = findViewById(R.id.item_add_delete);
+        item_add_delete.setOnClickListener(this);
     }
 
     public void getItemData(final long item_id) {
@@ -156,6 +175,20 @@ public class ItemClickActivity extends AppCompatActivity implements TabLayout.On
                     count--;
                 }
                 item_count.setText(String.valueOf(count));
+                break;
+            case R.id.item_add:
+                int total_price = count * Integer.parseInt(item_price.getText().toString());
+                item_add_name.setText(item_name.getText());
+                item_add_count.setText(String.valueOf(count));
+                item_add_price.setText(total_price + Currency.getInstance(Locale.KOREA).getSymbol());
+                item_add_layout.setVisibility(View.VISIBLE);
+                break;
+            case R.id.item_add_delete:
+                item_add_layout.setVisibility(View.GONE);
+                break;
+            case R.id.buy_button:
+                break;
+            case R.id.cart_button:
                 break;
         }
     }

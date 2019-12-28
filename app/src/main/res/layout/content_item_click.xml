@@ -118,6 +118,7 @@
             app:layout_constraintStart_toEndOf="@+id/item_count" />
 
         <Button
+            android:id="@+id/item_add"
             android:layout_width="100sp"
             android:layout_height="30sp"
             android:layout_marginStart="100dp"
@@ -130,19 +131,64 @@
             app:layout_constraintStart_toEndOf="@+id/item_count_up"
             app:layout_constraintTop_toBottomOf="@+id/item_price" />
 
+        <LinearLayout
+            android:id="@+id/item_add_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/item_count">
+
+            <TextView
+                android:id="@+id/item_add_name"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1.5"
+                android:layout_marginStart="25dp"
+                android:gravity="center"
+                android:text="아이템 이름"/>
+
+            <TextView
+                android:id="@+id/item_add_count"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10sp"
+                android:gravity="center"
+                android:text="아이템 수량"/>
+
+            <TextView
+                android:id="@+id/item_add_price"
+                android:layout_width="0dp"
+                android:layout_weight="1.2"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10sp"
+                android:gravity="center"
+                android:text="아이템 총가격"/>
+
+            <Button
+                android:id="@+id/item_add_delete"
+                android:layout_width="20sp"
+                android:layout_height="20sp"
+                android:layout_marginEnd="25sp"
+                android:layout_marginStart="10sp"
+                android:background="@drawable/ic_close_gray_24dp" />
+        </LinearLayout>
+
         <Button
             android:id="@+id/buy_button"
             android:layout_width="180sp"
             android:layout_height="wrap_content"
             android:layout_marginStart="15sp"
             android:layout_marginTop="20sp"
+            android:background="@drawable/item_buy_button"
             android:fontFamily="@font/nixgonfont"
             android:text="바로 구매하기"
-            android:textStyle="bold"
             android:textColor="#FFFFFF"
-            android:background="@drawable/item_buy_button"
+            android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/item_count" />
+            app:layout_constraintTop_toBottomOf="@+id/item_add_layout" />
 
         <Button
             android:id="@+id/cart_button"
@@ -156,7 +202,7 @@
             android:background="@drawable/item_buy_button"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/buy_button"
-            app:layout_constraintTop_toBottomOf="@id/item_count" />
+            app:layout_constraintTop_toBottomOf="@id/item_add_layout" />
 
         <android.support.design.widget.TabLayout
             android:id="@+id/item_tab_layout"
