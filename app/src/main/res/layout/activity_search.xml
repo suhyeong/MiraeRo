@@ -9,7 +9,7 @@
     tools:ignore="MissingConstraints">
 
     <android.support.design.widget.AppBarLayout
-        android:id="@+id/search_appBarLayout"
+        android:id="@+id/search_appbarLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:theme="@style/AppTheme.AppBarOverlay">
@@ -38,8 +38,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10sp"
-        app:layout_constraintTop_toBottomOf="@+id/search_appBarLayout">
-
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/search_appbarLayout">
     </android.support.v7.widget.RecyclerView>
 
 </android.support.constraint.ConstraintLayout>
