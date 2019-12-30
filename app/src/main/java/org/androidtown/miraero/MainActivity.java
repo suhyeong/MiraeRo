@@ -173,8 +173,8 @@ public class MainActivity extends AppCompatActivity
                 drawerLayout.openDrawer(GravityCompat.START);
                 return true;
             case R.id.action_search:
-                Snackbar search_snackbar = Snackbar.make(layout, "검색 클릭 !", Snackbar.LENGTH_SHORT);
-                search_snackbar.show();
+                Intent search_intent = new Intent(this, SearchActivity.class);
+                startActivity(search_intent);
                 return true;
             case R.id.action_cart:
                 Snackbar cart_snackbar = Snackbar.make(layout, "카트 클릭 !", Snackbar.LENGTH_SHORT);
