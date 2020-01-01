@@ -20,11 +20,14 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ViewFlipper;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -46,16 +49,19 @@ public class MainActivity extends AppCompatActivity
     private Toolbar toolbar;
 
     private ViewFlipper eventviewFlipper;
-    FirebaseStorage firebaseStorage = FirebaseStorage.getInstance();
-    StorageReference mStroageRef = firebaseStorage.getReference();
+    private FirebaseStorage firebaseStorage = FirebaseStorage.getInstance();
+    private StorageReference mStroageRef = firebaseStorage.getReference();
 
-    FirebaseDatabase database = FirebaseDatabase.getInstance();
-    DatabaseReference mDatabaseRef = database.getReference();
+    private FirebaseDatabase database = FirebaseDatabase.getInstance();
+    private DatabaseReference mDatabaseRef = database.getReference();
 
     final long one_byte = 1024 * 1024;
     private RecyclerView recyclerView;
     private RecyclerAdapter recyclerAdapter;
     private ArrayList<Integer> event_order = new ArrayList<>();
+
+    private FirebaseAuth auth;
+    private TextView user_name;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,6 +77,10 @@ public class MainActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
         actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawerLayout.addDrawerListener(actionBarDrawerToggle);
+
+        auth =  FirebaseAuth.getInstance();
+        user_name = navigationView.getHeaderView(0).findViewById(R.id.user_name);
+        user_name.setText(auth.getCurrentUser().getDisplayName());
 
         eventviewFlipper = findViewById(R.id.event_image_slide);
         EventFliperImage();
@@ -225,7 +235,9 @@ public class MainActivity extends AppCompatActivity
                 Toast.makeText(this, "about 미래로 클릭 !", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.nav_logout:
-                Toast.makeText(this, "로그아웃 클릭 !", Toast.LENGTH_SHORT).show();
+                auth.signOut();
+                Toast.makeText(this, "로그아웃하였습니다. 앱을 종료합니다.", Toast.LENGTH_SHORT).show();
+                finish();
                 break;
         }
         drawerLayout.closeDrawer(GravityCompat.START);

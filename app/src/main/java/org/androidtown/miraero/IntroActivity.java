@@ -75,6 +75,8 @@ public class IntroActivity extends AppCompatActivity {
                 firebaseAuthWithGoogle(account);
                 Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                 startActivity(intent);
+                Toast.makeText(IntroActivity.this, task.getResult().getDisplayName()+"님 환영합니다 !", Toast.LENGTH_SHORT).show();
+                finish();
             } catch (ApiException e) {
                 Log.w(TAG, "Google Sign In Failed", e);
             }
@@ -91,9 +93,10 @@ public class IntroActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if(task.isSuccessful()) {
                             Log.d(TAG, "signInWithCredential:success");
+                            Toast.makeText(IntroActivity.this, "구글과의 연동에 성공하였습니다.", Toast.LENGTH_SHORT).show();
                         } else {
                             Log.w(TAG, "signInWithCredential:failure", task.getException());
-                            Toast.makeText(IntroActivity.this, "구글과의 연결에 실패하였습니다.", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(IntroActivity.this, "구글과의 연동에 실패하였습니다.", Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
