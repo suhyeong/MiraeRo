@@ -76,7 +76,7 @@ public class ItemClickActivity extends AppCompatActivity implements TabLayout.On
         tabLayout = findViewById(R.id.item_tab_layout);
         viewPager = findViewById(R.id.item_tab_viewpager);
 
-        tabPagerAdapter = new TabPagerAdapter(getSupportFragmentManager());
+        tabPagerAdapter = new TabPagerAdapter(getSupportFragmentManager(), item_id);
         viewPager.setAdapter(tabPagerAdapter);
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
         tabLayout.addOnTabSelectedListener(this);

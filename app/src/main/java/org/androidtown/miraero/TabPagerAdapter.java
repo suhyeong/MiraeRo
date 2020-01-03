@@ -1,13 +1,17 @@
 package org.androidtown.miraero;
 
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
 public class TabPagerAdapter extends FragmentStatePagerAdapter {
 
-    public TabPagerAdapter(FragmentManager fm) {
+    long item_id;
+
+    public TabPagerAdapter(FragmentManager fm, long item_id) {
         super(fm);
+        this.item_id = item_id;
     }
 
     @Override
@@ -18,6 +22,9 @@ public class TabPagerAdapter extends FragmentStatePagerAdapter {
                 return itemDetailFragment;
             case 1:
                 ItemReviewFragment itemReviewFragment = new ItemReviewFragment();
+                Bundle bundle = new Bundle();
+                bundle.putLong("item_id", item_id);
+                itemReviewFragment.setArguments(bundle);
                 return itemReviewFragment;
             case 2:
                 ItemQNAFragment itemQNAFragment = new ItemQNAFragment();
