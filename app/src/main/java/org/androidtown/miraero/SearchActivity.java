@@ -34,7 +34,6 @@ public class SearchActivity extends AppCompatActivity implements TextWatcher, Se
     private RecyclerView search_recyclerView;
     private EditText search_text;
     private SearchAdapter searchAdapter;
-    private ArrayList<Item> search_arrayList;
 
     final long one_byte = 1024 * 1024;
     FirebaseStorage firebaseStorage = FirebaseStorage.getInstance();
@@ -54,13 +53,12 @@ public class SearchActivity extends AppCompatActivity implements TextWatcher, Se
         search_recyclerView = findViewById(R.id.search_recyclerview);
         search_text = findViewById(R.id.search_edittext);
         search_text.addTextChangedListener(this);
-        search_arrayList = new ArrayList<>();
 
         //search_getData();
         search_getData();
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         search_recyclerView.setLayoutManager(linearLayoutManager);
-        searchAdapter = new SearchAdapter(getApplicationContext(), search_arrayList);
+        searchAdapter = new SearchAdapter();
         search_recyclerView.setAdapter(searchAdapter);
         searchAdapter.setOnItemClickListener(this);
     }
@@ -83,7 +81,9 @@ public class SearchActivity extends AppCompatActivity implements TextWatcher, Se
                         public void onSuccess(byte[] bytes) {
                             Bitmap getdata_bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
                             get_item.setBitmap(getdata_bitmap);
-                            search_arrayList.add(get_item);
+                            searchAdapter.addItem(get_item);
+                            searchAdapter.notifyDataSetChanged();
+                            //search_arrayList.add(get_item);
                         }
                     }).addOnFailureListener(new OnFailureListener() {
                         @Override

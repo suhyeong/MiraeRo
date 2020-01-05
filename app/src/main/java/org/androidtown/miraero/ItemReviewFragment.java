@@ -1,7 +1,5 @@
 package org.androidtown.miraero;
 
-import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
@@ -10,17 +8,13 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
+import android.widget.TextView;
 
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-
-import java.util.ArrayList;
 
 
 public class ItemReviewFragment extends Fragment {
@@ -32,7 +26,8 @@ public class ItemReviewFragment extends Fragment {
 
     private FirebaseDatabase database = FirebaseDatabase.getInstance();
     private DatabaseReference mDatabaseRef = database.getReference();
-    private FirebaseAuth auth = FirebaseAuth.getInstance();
+
+    private TextView no_review;
 
     public ItemReviewFragment() {
         // Required empty public constructor
@@ -57,6 +52,9 @@ public class ItemReviewFragment extends Fragment {
         }
         View view = inflater.inflate(R.layout.fragment_item_review, container, false);
 
+        no_review = view.findViewById(R.id.no_review);
+        no_review.setVisibility(View.GONE);
+
         recyclerView = view.findViewById(R.id.review_list);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(linearLayoutManager);
@@ -70,16 +68,20 @@ public class ItemReviewFragment extends Fragment {
         mDatabaseRef.child("Review").child(String.valueOf(item_id)).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for(DataSnapshot Reviews : dataSnapshot.getChildren()) {
-                    Review get_review = Reviews.getValue(Review.class);
+                if(dataSnapshot.getChildrenCount() == 0) {
+                    no_review.setVisibility(View.VISIBLE);
+                    recyclerView.setVisibility(View.GONE);
+                } else {
+                    for(DataSnapshot Reviews : dataSnapshot.getChildren()) {
+                        Review get_review = Reviews.getValue(Review.class);
 
-                    Review review = new Review();
-                    review.setGrade(get_review.getGrade());
-                    review.setRcontent(get_review.getRcontent());
-                    String writer_id = Reviews.getKey();
-                    review.setWriter(writer_id);
-                    reviewAdapter.addReview(review);
-                    reviewAdapter.notifyDataSetChanged();
+                        Review review = new Review();
+                        review.setGrade(get_review.getGrade());
+                        review.setRcontent(get_review.getRcontent());
+                        review.setWriter(get_review.getWriter());
+                        reviewAdapter.addReview(review);
+                        reviewAdapter.notifyDataSetChanged();
+                    }
                 }
             }
 

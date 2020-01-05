@@ -16,17 +16,9 @@ import java.util.ArrayList;
 
 public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.SearchHolder> implements Filterable {
 
-    private Context context;
-    private ArrayList<Item> unFilteredlist;
-    private ArrayList<Item> filteredList;
+    private ArrayList<Item> unFilteredlist = new ArrayList<>();
+    private ArrayList<Item> filteredList = new ArrayList<>();
     private OnItemClickListener onItemClickListener = null;
-
-    public SearchAdapter(Context context, ArrayList<Item> list) {
-        super();
-        this.context = context;
-        this.unFilteredlist = list;
-        this.filteredList = list;
-    }
 
     @Override
     public SearchHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
@@ -39,6 +31,11 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.SearchHold
         viewHolder.name_textView.setText(filteredList.get(i).getName());
         viewHolder.imageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
         viewHolder.imageView.setImageBitmap(filteredList.get(i).getBitmap());
+    }
+
+    void addItem(Item item) {
+        unFilteredlist.add(item);
+        filteredList.add(item);
     }
 
     @Override

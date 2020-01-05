@@ -16,18 +16,20 @@ public class TabPagerAdapter extends FragmentStatePagerAdapter {
 
     @Override
     public Fragment getItem(int position) {
+        Bundle bundle = new Bundle();
+        bundle.putLong("item_id", item_id);
+
         switch(position) {
             case 0:
                 ItemDetailFragment itemDetailFragment = new ItemDetailFragment();
                 return itemDetailFragment;
             case 1:
                 ItemReviewFragment itemReviewFragment = new ItemReviewFragment();
-                Bundle bundle = new Bundle();
-                bundle.putLong("item_id", item_id);
                 itemReviewFragment.setArguments(bundle);
                 return itemReviewFragment;
             case 2:
                 ItemQNAFragment itemQNAFragment = new ItemQNAFragment();
+                itemQNAFragment.setArguments(bundle);
                 return itemQNAFragment;
             case 3:
                 ItemOriginFragment itemOriginFragment = new ItemOriginFragment();
